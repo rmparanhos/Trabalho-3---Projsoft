@@ -1,5 +1,7 @@
 package util;
 
+import anotacao.Perfil;
+
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;

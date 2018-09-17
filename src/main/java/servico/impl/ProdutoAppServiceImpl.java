@@ -2,6 +2,7 @@ package servico.impl;
 
 import java.util.List;
 
+import anotacao.Perfil;
 import anotacao.RollbackFor;
 import dao.ProdutoDAO;
 import dao.controle.FabricaDeDAOs;
@@ -15,6 +16,7 @@ public class ProdutoAppServiceImpl implements ProdutoAppService
 {	
 	private static ProdutoDAO produtoDAO = FabricaDeDAOs.getDAO(ProdutoDAO.class);
 
+	@Perfil(nome="admin")
 	public long inclui(Produto umProduto) 
 	{	
 		System.out.println("\nDentro de ProdutoAppServiceImpl. Vai chamar o método inclui() de ProdutoDAOImpl.");
@@ -28,6 +30,7 @@ public class ProdutoAppServiceImpl implements ProdutoAppService
 
 	@RollbackFor(nomes={ProdutoNaoEncontradoException.class,
 			            ClienteNaoEncontradoException.class})
+	@Perfil(nome="admin")
 	public void altera(Produto umProduto)
 		throws ProdutoNaoEncontradoException
 	{	
@@ -44,7 +47,8 @@ public class ProdutoAppServiceImpl implements ProdutoAppService
 			throw new ProdutoNaoEncontradoException("Produto não encontrado");
 		}
 	}
-	
+
+	@Perfil(nome="admin")
 	public void exclui(long numero) 
 		throws ProdutoNaoEncontradoException
 	{	
@@ -62,6 +66,7 @@ public class ProdutoAppServiceImpl implements ProdutoAppService
 		}
 	}
 
+	@Perfil(nome="admin")
 	public Produto recuperaUmProduto(long numero) 
 		throws ProdutoNaoEncontradoException
 	{	
@@ -80,6 +85,7 @@ public class ProdutoAppServiceImpl implements ProdutoAppService
 		}
 	}
 
+	@Perfil(nome="admin")
 	public List<Produto> recuperaProdutos() 
 	{	
 		// System.out.println("Vai chamar o método recuperaProdutos() de ProdutoDAOImpl.");
