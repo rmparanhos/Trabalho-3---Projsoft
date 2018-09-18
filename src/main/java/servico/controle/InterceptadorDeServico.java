@@ -2,9 +2,12 @@ package servico.controle;
 
 import java.lang.reflect.Method;
 
+import anotacao.Perfil;
 import anotacao.RollbackFor;
+import excecao.SemPermissaoException;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import singleton.SingletonPerfil;
 
 public class InterceptadorDeServico implements MethodInterceptor 
 {
@@ -37,7 +40,18 @@ public class InterceptadorDeServico implements MethodInterceptor
     	throws Throwable 
     {
 		try 
-		{	
+		{
+
+			SingletonPerfil singletonPerfil = SingletonPerfil.getSingletonPerfil();
+			String logado = singletonPerfil.getPerfil();
+
+			if(metodo.isAnnotationPresent(Perfil.class)){
+				Perfil perfil = metodo.getAnnotation(Perfil.class);
+				if (logado.equals(perfil.nome())){
+					throw new SemPermissaoException();
+				}
+			}
+
 			JPAUtil.beginTransaction();
 
 			System.out.println("\nDentro do interceptador - Executando o método " + metodo.getName() 

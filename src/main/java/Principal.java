@@ -7,6 +7,7 @@ import excecao.ProdutoNaoEncontradoException;
 import modelo.Produto;
 import servico.ProdutoAppService;
 import servico.controle.FabricaDeServico;
+import singleton.SingletonPerfil;
 import util.Util;
 
 public class Principal
@@ -16,6 +17,9 @@ public class Principal
 		double lanceMinimo;
 		String dataCadastro;
 		Produto umProduto;
+
+		SingletonPerfil singletonPerfil = SingletonPerfil.getSingletonPerfil();
+		singletonPerfil.setPerfil("admin"); // Aqui estamos simulando que o usuário "logado" possui o perfil "admin".
 
 		System.out.println("\nVai criar o proxy de serviço");
 		
